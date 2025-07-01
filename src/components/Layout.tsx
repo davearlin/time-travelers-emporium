@@ -4,6 +4,7 @@ import { Clock, ShoppingCart, User, LogOut } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import ToastHistory from './ToastHistory';
+import { ThemeToggle } from './ThemeToggle';
 import styles from './Layout.module.css';
 
 interface LayoutProps {
@@ -58,6 +59,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </nav>
 
           <div className={styles.userActions}>
+            <ThemeToggle />
+            
             <ToastHistory />
             
             <Link to="/cart" className={styles.cartButton}>

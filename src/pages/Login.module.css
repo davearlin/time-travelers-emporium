@@ -1,14 +1,19 @@
+/* Import Design System */
+@import '../design-system.css';
+
 .loginContainer {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--light-blue-700) 0%, var(--purple-700) 100%);
   padding: 1rem;
+  position: relative;
 }
 
 .loginCard {
-  background: white;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
   border-radius: 1rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   padding: 2rem;
@@ -22,7 +27,7 @@
 }
 
 .logo {
-  color: #3730a3;
+  color: var(--purple-700);
   margin-bottom: 1rem;
   animation: spin 20s linear infinite;
 }
@@ -34,13 +39,13 @@
 
 .header h1 {
   font-size: 1.5rem;
-  font-weight: bold;
-  color: #1f2937;
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--color-text-primary);
   margin: 0 0 0.5rem 0;
 }
 
 .header p {
-  color: #6b7280;
+  color: var(--color-text-secondary);
   margin: 0;
 }
 
@@ -58,22 +63,25 @@
 
 .inputGroup label {
   font-weight: 500;
-  color: #374151;
+  color: var(--color-text-primary);
   font-size: 0.9rem;
 }
 
 .inputGroup input {
   padding: 0.75rem;
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--color-border);
   border-radius: 0.5rem;
   font-size: 1rem;
+  font-family: var(--font-family-supporting);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
   transition: border-color 0.2s;
 }
 
 .inputGroup input:focus {
   outline: none;
-  border-color: #3730a3;
-  box-shadow: 0 0 0 3px rgba(55, 48, 163, 0.1);
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 3px var(--light-blue-100);
 }
 
 .passwordInput {
@@ -87,7 +95,7 @@
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   cursor: pointer;
   padding: 0;
   display: flex;
@@ -95,28 +103,32 @@
 }
 
 .passwordToggle:hover {
-  color: #374151;
+  color: var(--color-text-primary);
 }
 
 .loginButton {
-  background: linear-gradient(135deg, #3730a3 0%, #1e3a8a 100%);
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-text-on-color);
   border: none;
   padding: 0.875rem;
   border-radius: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
+  font-family: var(--font-family-supporting);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .loginButton:hover:not(:disabled) {
+  background: var(--color-primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 10px 25px -5px rgba(55, 48, 163, 0.4);
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
 }
 
 .loginButton:disabled {
-  opacity: 0.6;
+  background: var(--color-secondary);
+  color: var(--color-text-muted);
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
@@ -127,34 +139,41 @@
 .forgotPassword {
   background: none;
   border: none;
-  color: #3730a3;
+  color: var(--purple-700);
   text-decoration: underline;
   cursor: pointer;
   font-size: 0.9rem;
 }
 
 .forgotPassword:hover {
-  color: #1e3a8a;
+  color: var(--purple-800);
 }
 
 .demoCredentials {
-  background: #f3f4f6;
+  background: var(--color-background-alt);
   padding: 1rem;
   border-radius: 0.5rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 }
 
 .demoCredentials h3 {
   margin: 0 0 0.5rem 0;
   font-size: 0.9rem;
-  color: #374151;
+  color: var(--color-text-primary);
 }
 
 .demoCredentials p {
   margin: 0.25rem 0;
   font-size: 0.8rem;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   font-family: monospace;
+}
+
+.themeToggleContainer {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
 }
 
 @media (max-width: 480px) {

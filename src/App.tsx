@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
 import { ToastHistoryProvider } from './contexts/ToastHistoryContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -23,11 +24,12 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <ToastHistoryProvider>
-          <Router>
-            <div className="App">
+    <ThemeProvider>
+      <AuthProvider>
+        <CartProvider>
+          <ToastHistoryProvider>
+            <Router>
+              <div className="App">
               <Routes>
                 <Route path="/login" element={<Login />} />
               <Route path="/" element={
@@ -110,6 +112,7 @@ function App() {
       </ToastHistoryProvider>
     </CartProvider>
   </AuthProvider>
+  </ThemeProvider>
   );
 }
 
