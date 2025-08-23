@@ -6,7 +6,7 @@ export const products: Product[] = [
     name: 'Ancient Egyptian Hieroglyph Tablet',
     description: 'Authentic limestone tablet with hieroglyphic inscriptions from the Middle Kingdom period.',
     price: 299.99,
-    image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&h=300&fit=crop',
     category: 'Tablets',
     era: 'ancient',
     featured: true
@@ -25,7 +25,7 @@ export const products: Product[] = [
     name: 'Renaissance Pocket Watch',
     description: 'Intricate mechanical timepiece crafted by master horologists of 16th century Florence.',
     price: 899.99,
-    image: 'https://images.unsplash.com/photo-1509048191080-d2abbc854d89?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1495856458515-0637185db551?w=400&h=300&fit=crop',
     category: 'Timepieces',
     era: 'renaissance'
   },
@@ -34,7 +34,7 @@ export const products: Product[] = [
     name: 'Quantum Communicator (2087)',
     description: 'Instantaneous communication device from the late 21st century. Still in beta.',
     price: 4999.99,
-    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=300&fit=crop',
     category: 'Technology',
     era: 'future'
   },
@@ -79,7 +79,7 @@ export const products: Product[] = [
     name: 'Samurai Katana',
     description: 'Hand-forged blade from 15th century Japan, complete with ceremonial scabbard.',
     price: 1899.99,
-    image: 'https://images.unsplash.com/photo-1544963151-6e4ed999de02?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1544737151-6e4e999de02?w=400&h=300&fit=crop',
     category: 'Weapons',
     era: 'medieval'
   },
@@ -97,7 +97,7 @@ export const products: Product[] = [
     name: 'Tesla\'s Wireless Energy Prototype',
     description: 'Experimental device from Nikola Tesla\'s laboratory, circa 1899.',
     price: 5999.99,
-    image: 'https://images.unsplash.com/photo-1581092795441-6a7d8b2e62b6?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop',
     category: 'Technology',
     era: 'modern'
   },
@@ -106,7 +106,7 @@ export const products: Product[] = [
     name: 'Time Crystal (2445)',
     description: 'Stable temporal lattice structure from the 25th century. Handle with extreme care.',
     price: 25000.00,
-    image: 'https://images.unsplash.com/photo-1604076947978-ffa6743f6e20?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=300&fit=crop',
     category: 'Crystals',
     era: 'future'
   },

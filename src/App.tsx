@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
 import { ToastHistoryProvider } from './contexts/ToastHistoryContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -23,11 +24,12 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <ToastHistoryProvider>
-          <Router>
-            <div className="App">
+    <ThemeProvider>
+      <AuthProvider>
+        <CartProvider>
+          <ToastHistoryProvider>
+            <Router>
+              <div className="App">
               <Routes>
                 <Route path="/login" element={<Login />} />
               <Route path="/" element={
@@ -86,21 +88,37 @@ function App() {
               toastOptions={{
                 duration: 4000,
                 style: {
-                  background: '#363636',
-                  color: '#fff',
+                  background: 'var(--color-surface)',
+                  color: 'var(--color-text-primary)',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                  fontSize: '0.875rem',
+                  fontFamily: 'var(--font-family-supporting)',
+                  padding: '1rem 1.25rem',
                 },
                 success: {
                   duration: 3000,
+                  style: {
+                    background: 'var(--color-success-light)',
+                    color: 'var(--color-text-primary)',
+                    border: '1px solid var(--color-success)',
+                  },
                   iconTheme: {
-                    primary: '#4ade80',
-                    secondary: '#fff',
+                    primary: 'var(--color-success)',
+                    secondary: 'var(--color-surface)',
                   },
                 },
                 error: {
                   duration: 4000,
+                  style: {
+                    background: 'var(--color-error-light)',
+                    color: 'var(--color-text-primary)',
+                    border: '1px solid var(--color-error)',
+                  },
                   iconTheme: {
-                    primary: '#ef4444',
-                    secondary: '#fff',
+                    primary: 'var(--color-error)',
+                    secondary: 'var(--color-surface)',
                   },
                 },
               }}
@@ -110,6 +128,7 @@ function App() {
       </ToastHistoryProvider>
     </CartProvider>
   </AuthProvider>
+  </ThemeProvider>
   );
 }
 

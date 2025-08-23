@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { Clock, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTrackedToast } from '../hooks/useTrackedToast';
+import { ThemeToggle } from '../components/ThemeToggle';
 import styles from './Login.module.css';
 
 const Login: React.FC = () => {
@@ -44,6 +45,9 @@ const Login: React.FC = () => {
 
   return (
     <div className={styles.loginContainer}>
+      <div className={styles.themeToggleContainer}>
+        <ThemeToggle />
+      </div>
       <div className={styles.loginCard}>
         <div className={styles.header}>
           <Clock className={styles.logo} size={48} />

@@ -1,0 +1,144 @@
+/* Import Design System */
+@import '../design-system.css';
+
+.themeToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-border);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: var(--font-family-supporting);
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  min-width: fit-content;
+}
+
+.themeToggle:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-border-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.themeToggle:focus {
+  outline: none;
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 2px var(--light-blue-100);
+}
+
+.iconContainer {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  position: absolute;
+  transition: all 0.3s ease;
+  opacity: 0.5;
+  transform: scale(0.8) rotate(-45deg);
+}
+
+.icon.active {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.sunIcon {
+  color: var(--orange-500);
+}
+
+.moonIcon {
+  color: var(--purple-400);
+}
+
+.label {
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+/* Animation for smooth theme transitions */
+@media (prefers-reduced-motion: no-preference) {
+  .icon {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .sunIcon.active {
+    animation: sunRise 0.4s ease-out;
+  }
+  
+  .moonIcon.active {
+    animation: moonRise 0.4s ease-out;
+  }
+}
+
+@keyframes sunRise {
+  0% {
+    transform: scale(0.8) rotate(-45deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes moonRise {
+  0% {
+    transform: scale(0.8) rotate(45deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .themeToggle {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .label {
+    display: none;
+  }
+  
+  .themeToggle {
+    gap: 0;
+    min-width: 2.5rem;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .themeToggle {
+    padding: 0.25rem;
+    min-width: 2rem;
+  }
+  
+  .iconContainer {
+    width: 16px;
+    height: 16px;
+  }
+}

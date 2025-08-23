@@ -1,0 +1,325 @@
+/* Design System - Color Variables and Tokens */
+/* Generated from Figma design system */
+
+:root {
+  /* Theme toggle variable */
+  --theme: 'light';
+  /* Light Blue Palette */
+  --light-blue-100: #f1f7ff;
+  --light-blue-200: #e1eeff;
+  --light-blue-300: #d3e4ff;
+  --light-blue-400: #c4d9ff;
+  --light-blue-500: #a5c1ff;
+  --light-blue-700: #6e87ff;
+  --light-blue-800: #5265ff;
+  --light-blue-900: #4555d6;
+  --light-blue-1000: #3845ad;
+  --light-blue-1100: #2b3585;
+
+  /* Midnight Palette */
+  --midnight-100: #546a8c;
+  --midnight-200: #4c6181;
+  --midnight-300: #445876;
+  --midnight-400: #3c4f6b;
+  --midnight-500: #344660;
+  --midnight-600: #2d3d55;
+  --midnight-700: #263449;
+  --midnight-800: #1f2b3d;
+  --midnight-900: #182231;
+  --midnight-1000: #121a25;
+  --midnight-1100: #0c1119;
+
+  /* Mist Palette */
+  --mist-100: #fcfcfd;
+  --mist-200: #eef1f6;
+  --mist-300: #e0e6ef;
+  --mist-400: #ccd5e3;
+  --mist-500: #bfcadb;
+  --mist-600: #b2bfd3;
+  --mist-700: #a5b4cb;
+  --mist-800: #98a9c3;
+  --mist-900: #8c9eba;
+  --mist-1000: #7a8ead;
+
+  /* Teal Palette */
+  --teal-100: #ccf6f8;
+  --teal-200: #a3eef2;
+  --teal-300: #7ae7ec;
+  --teal-400: #52dfe7;
+  --teal-500: #29d8e1;
+  --teal-600: #00d0db;
+  --teal-700: #00afb8;
+  --teal-800: #008d95;
+  --teal-900: #006c72;
+  --teal-1000: #004b4f;
+  --teal-1100: #002a2c;
+
+  /* Green Palette */
+  --green-100: #cdf3e5;
+  --green-200: #a5e9d0;
+  --green-300: #7ddfbb;
+  --green-400: #55d5a7;
+  --green-500: #2dcb92;
+  --green-600: #05c17d;
+  --green-700: #04a269;
+  --green-800: #038355;
+  --green-900: #036441;
+  --green-1000: #02462d;
+  --green-1100: #012719;
+
+  /* Light Green Palette */
+  --light-green-100: #f4f6d7;
+  --light-green-200: #ebf0b7;
+  --light-green-300: #e2e997;
+  --light-green-400: #d9e277;
+  --light-green-500: #d0db57;
+  --light-green-600: #c8d437;
+  --light-green-700: #a7b22e;
+  --light-green-800: #879025;
+  --light-green-900: #686e1d;
+  --light-green-1000: #484c14;
+  --light-green-1100: #282a0b;
+
+  /* Primary Orange Palette */
+  --orange-100: #ffe8cd;
+  --orange-200: #ffd6a5;
+  --orange-300: #ffc37d;
+  --orange-400: #ffb154;
+  --orange-500: #ff9e2c;
+  --orange-600: #ff8c04;
+  --orange-700: #d67603;
+  --orange-800: #ad5f03;
+  --orange-900: #854902;
+  --orange-1000: #5c3201;
+  --orange-1100: #331c01;
+
+  /* Purple Palette */
+  --purple-100: #e8def7;
+  --purple-200: #d6c4f1;
+  --purple-300: #c4aaeb;
+  --purple-400: #b290e5;
+  --purple-500: #9f75df;
+  --purple-600: #8d5bd9;
+  --purple-700: #764cb6;
+  --purple-800: #603e94;
+  --purple-900: #492f71;
+  --purple-1000: #33214e;
+  --purple-1100: #1c122b;
+
+  /* Blue Palette */
+  --blue-100: #e6eaf1;
+  --blue-200: #c9d2e1;
+  --blue-300: #acbbd1;
+  --blue-400: #8fa3c1;
+  --blue-500: #738cb1;
+  --blue-600: #5674a2;
+  --blue-700: #395c92;
+  --blue-800: #1d4582;
+  --blue-900: #002d72;
+  --blue-1000: #002050;
+  --blue-1100: #00122e;
+
+  /* Primary Blue Palette */
+  --primary-blue-100: #e6e8ec;
+  --primary-blue-200: #c9ced7;
+  --primary-blue-300: #acb3c2;
+  --primary-blue-400: #9099ac;
+  --primary-blue-500: #737f97;
+  --primary-blue-600: #576582;
+  --primary-blue-700: #3a4a6d;
+  --primary-blue-800: #1e3057;
+  --primary-blue-900: #011642;
+  --primary-blue-1000: #010f2e;
+  --primary-blue-1100: #00091a;
+
+  /* Yellow Palette */
+  --yellow-100: #fffbde;
+  --yellow-200: #fff6b3;
+  --yellow-300: #fff187;
+  --yellow-400: #ffec5b;
+  --yellow-500: #ffe730;
+  --yellow-600: #f3d104;
+  --yellow-700: #e6c104;
+  --yellow-800: #be8f03;
+  --yellow-900: #9d6c03;
+  --yellow-1000: #7c4e02;
+  --yellow-1100: #5c3301;
+
+  /* Critical/Error Palette */
+  --critical-100: #ffcccc;
+  --critical-200: #ffa3a3;
+  --critical-300: #ff7a7a;
+  --critical-400: #f55259;
+  --critical-500: #e2294a;
+  --critical-600: #c9043f;
+  --critical-700: #b9002e;
+  --critical-800: #a40020;
+  --critical-900: #850014;
+  --critical-1000: #5c000b;
+  --critical-1100: #330005;
+
+  /* Greyscale */
+  --greyscale-100: #ffffff;
+
+  /* Surface Colors */
+  --surface-strong: #121a25;
+
+  /* Highlight Colors */
+  --highlight-text-primary: #15181c;
+  --highlight-text-secondary: #ffffff;
+  --highlight-lightgreen: #d9e277;
+  --highlight-lightblue-1: #89a6ff;
+  --highlight-lightblue-2: #4555d6;
+  --highlight-orange-1: #ffd6a5;
+  --highlight-orange-2: #ff9e2c;
+  --highlight-teal: #00afb8;
+  --highlight-purple-1: #d6c4f1;
+  --highlight-purple-2: #b290e5;
+  --highlight-purple-3: #764cb6;
+  --highlight-green-1: #a5e9d0;
+  --highlight-green-2: #55d5a7;
+  --highlight-green-3: #04a269;
+  --highlight-red-1: #ffcccc;
+  --highlight-red-2: #c9043f;
+  --highlight-grey: #b8bbc0;
+
+  /* Typography */
+  --font-family-supporting: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-weight-semi-bold: 600;
+  --font-letter-spacing-headline: 0;
+}
+
+/* Light Theme (Default) */
+:root,
+[data-theme="light"] {
+  /* Semantic Color Mappings - Light Mode */
+  --color-primary: var(--light-blue-800);
+  --color-primary-hover: var(--light-blue-700);
+  --color-primary-active: var(--light-blue-900);
+  --color-primary-light: var(--light-blue-500);
+  
+  --color-secondary: var(--midnight-100);
+  --color-secondary-hover: var(--midnight-200);
+  --color-secondary-active: var(--midnight-300);
+  
+  --color-success: var(--green-600);
+  --color-success-hover: var(--green-700);
+  --color-success-light: var(--green-200);
+  
+  --color-warning: var(--orange-500);
+  --color-warning-hover: var(--orange-600);
+  --color-warning-light: var(--orange-200);
+  
+  --color-error: var(--critical-500);
+  --color-error-hover: var(--critical-600);
+  --color-error-light: var(--critical-200);
+  
+  --color-info: var(--teal-600);
+  --color-info-hover: var(--teal-700);
+  --color-info-light: var(--teal-200);
+
+  /* Surface & Background Colors - Light Mode */
+  --color-background: var(--mist-100);
+  --color-background-alt: var(--mist-200);
+  --color-surface: var(--greyscale-100);
+  --color-surface-hover: var(--mist-300);
+  --color-surface-strong: var(--midnight-1000);
+
+  /* Text Colors - Light Mode */
+  --color-text-primary: var(--highlight-text-primary);
+  --color-text-secondary: var(--midnight-500);
+  --color-text-muted: var(--midnight-300);
+  --color-text-inverse: var(--highlight-text-secondary);
+  --color-text-on-color: var(--mist-100); /* For text on colored backgrounds (buttons, badges, etc.) */
+
+  /* Border Colors - Light Mode */
+  --color-border: var(--mist-400);
+  --color-border-light: var(--mist-300);
+  --color-border-strong: var(--midnight-400);
+
+  /* Focus & Interactive States - Light Mode */
+  --color-focus: var(--highlight-lightblue-1);
+  --color-focus-ring: rgba(59, 130, 246, 0.3);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  /* Semantic Color Mappings - Dark Mode */
+  --color-primary: var(--light-blue-600);
+  --color-primary-hover: var(--light-blue-500);
+  --color-primary-active: var(--light-blue-700);
+  --color-primary-light: var(--light-blue-400);
+  
+  --color-secondary: var(--midnight-600);
+  --color-secondary-hover: var(--midnight-500);
+  --color-secondary-active: var(--midnight-700);
+  
+  --color-success: var(--green-500);
+  --color-success-hover: var(--green-400);
+  --color-success-light: var(--green-800);
+  
+  --color-warning: var(--orange-400);
+  --color-warning-hover: var(--orange-300);
+  --color-warning-light: var(--orange-800);
+  
+  --color-error: var(--critical-400);
+  --color-error-hover: var(--critical-300);
+  --color-error-light: var(--critical-800);
+  
+  --color-info: var(--teal-400);
+  --color-info-hover: var(--teal-300);
+  --color-info-light: var(--teal-800);
+
+  /* Surface & Background Colors - Dark Mode */
+  --color-background: var(--midnight-1000);
+  --color-background-alt: var(--midnight-900);
+  --color-surface: var(--midnight-800);
+  --color-surface-hover: var(--midnight-700);
+  --color-surface-strong: var(--midnight-1100);
+
+  /* Text Colors - Dark Mode */
+  --color-text-primary: var(--mist-100);
+  --color-text-secondary: var(--mist-400);
+  --color-text-muted: var(--mist-600);
+  --color-text-inverse: var(--midnight-1000);
+  --color-text-on-color: var(--mist-100); /* For text on colored backgrounds (buttons, badges, etc.) */
+
+  /* Border Colors - Dark Mode */
+  --color-border: var(--midnight-600);
+  --color-border-light: var(--midnight-700);
+  --color-border-strong: var(--midnight-400);
+
+  /* Focus & Interactive States - Dark Mode */
+  --color-focus: var(--highlight-lightblue-1);
+  --color-focus-ring: rgba(96, 165, 250, 0.4);
+}
+
+/* Theme transition for smooth switching */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Text selection styling for better contrast */
+::selection {
+  background: var(--color-primary);
+  color: var(--mist-100);
+}
+
+::-moz-selection {
+  background: var(--color-primary);
+  color: var(--mist-100);
+}
+
+/* Improve text contrast on gradients */
+.hero-text, .gradient-text {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Asset Constants for Images/SVGs */
+/* Use these constants for referencing localhost assets */
+/*
+Example usage in code:
+const heroImage = 'http://localhost:3845/assets/hero-banner.png';
+const logoSvg = 'http://localhost:3845/assets/logo.svg';
+const productImage = 'http://localhost:3845/assets/product-image.jpg';
+*/

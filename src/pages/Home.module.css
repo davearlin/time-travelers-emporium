@@ -1,3 +1,6 @@
+/* Import Design System */
+@import '../design-system.css';
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -5,17 +8,32 @@
 }
 
 .hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--light-blue-800) 0%, var(--purple-700) 100%);
+  color: var(--mist-100);
   padding: 4rem 2rem;
   border-radius: 1rem;
   margin-bottom: 3rem;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 .heroContent {
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .heroTitle {
@@ -24,8 +42,10 @@
   justify-content: center;
   gap: 1rem;
   font-size: 2.5rem;
-  font-weight: bold;
+  font-weight: var(--font-weight-semi-bold);
   margin-bottom: 1rem;
+  color: var(--mist-100);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .heroIcon {
@@ -40,8 +60,10 @@
 .heroSubtitle {
   font-size: 1.2rem;
   margin-bottom: 2rem;
-  opacity: 0.9;
+  opacity: 0.95;
   line-height: 1.6;
+  color: var(--mist-200);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .heroFeatures {
@@ -55,14 +77,17 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
   padding: 0.5rem 1rem;
   border-radius: 2rem;
   font-weight: 500;
+  color: var(--mist-100);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .featureIcon {
-  color: #fbbf24;
+  color: var(--yellow-400);
 }
 
 .featuredSection {
@@ -73,17 +98,19 @@
   font-size: 2rem;
   text-align: center;
   margin-bottom: 2rem;
-  color: #1f2937;
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semi-bold);
 }
 
 .featuredProduct {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
-  background: white;
+  background: var(--color-surface);
   border-radius: 1rem;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  border: 1px solid var(--color-border-light);
 }
 
 .productImage {
@@ -101,11 +128,11 @@
   position: absolute;
   top: 1rem;
   left: 1rem;
-  background: #fbbf24;
-  color: #1f2937;
+  background: var(--yellow-600);
+  color: var(--color-text-primary);
   padding: 0.5rem 1rem;
   border-radius: 2rem;
-  font-weight: bold;
+  font-weight: var(--font-weight-semi-bold);
   font-size: 0.9rem;
   display: flex;
   align-items: center;
@@ -130,14 +157,14 @@
 
 .productName {
   font-size: 1.5rem;
-  font-weight: bold;
-  color: #1f2937;
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
 .productEra {
-  background: #3730a3;
-  color: white;
+  background: var(--purple-700);
+  color: var(--mist-100);
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
   font-size: 0.9rem;
@@ -145,7 +172,7 @@
 }
 
 .productDescription {
-  color: #6b7280;
+  color: var(--color-text-secondary);
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
@@ -160,14 +187,14 @@
 }
 
 .productCategory {
-  color: #6b7280;
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
 }
 
 .productPrice {
   font-size: 1.5rem;
-  font-weight: bold;
-  color: #059669;
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--color-text-primary);
 }
 
 .addToCartButton {
@@ -175,8 +202,8 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  color: white;
+  background: var(--color-primary);
+  color: var(--mist-100);
   border: none;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
@@ -184,15 +211,17 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  font-family: var(--font-family-supporting);
 }
 
 .addToCartButton:hover {
+  background: var(--color-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.4);
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
 }
 
 .infoSection {
-  background: #f9fafb;
+  background: var(--color-background-alt);
   padding: 3rem 2rem;
   border-radius: 1rem;
 }
@@ -204,22 +233,23 @@
 }
 
 .infoCard {
-  background: white;
+  background: var(--color-surface);
   padding: 2rem;
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   text-align: center;
+  border: 1px solid var(--color-border-light);
 }
 
 .infoCard h3 {
   font-size: 1.25rem;
-  font-weight: bold;
-  color: #1f2937;
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
 }
 
 .infoCard p {
-  color: #6b7280;
+  color: var(--color-text-secondary);
   line-height: 1.6;
 }
 
