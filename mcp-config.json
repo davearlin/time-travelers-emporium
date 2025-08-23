@@ -1,0 +1,46 @@
+{
+  "name": "time-travelers-emporium",
+  "version": "1.0.0",
+  "description": "Time Travelers' Emporium MCP Server - Access to temporal artifacts catalog, pricing, and cart operations",
+  "server": {
+    "command": "node",
+    "args": ["backend/src/mcp/server.js"],
+    "cwd": "C:/Projects/time-travelers-emporium",
+    "env": {}
+  },
+  "capabilities": {
+    "resources": [
+      "emporium://products",
+      "emporium://products/featured", 
+      "emporium://products/categories",
+      "emporium://products/eras",
+      "emporium://analytics/stats"
+    ],
+    "tools": [
+      "search_products",
+      "get_product_details", 
+      "filter_products_by_price",
+      "get_products_by_era",
+      "add_to_cart",
+      "get_cart_summary"
+    ]
+  },
+  "examples": [
+    {
+      "description": "Search for medieval weapons",
+      "query": "Show me all medieval weapons under $2000"
+    },
+    {
+      "description": "Get product details",
+      "query": "Tell me about the Tesla Wireless Energy Prototype"
+    },
+    {
+      "description": "Add to cart",
+      "query": "Add the Viking Battle Axe to my cart"
+    },
+    {
+      "description": "Price analysis",
+      "query": "What's the average price of ancient artifacts?"
+    }
+  ]
+}
