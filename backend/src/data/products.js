@@ -1,6 +1,4 @@
-import type { Product } from '../types';
-
-export const products: Product[] = [
+export const products = [
   {
     id: '1',
     name: 'Ancient Egyptian Hieroglyph Tablet',
@@ -184,7 +182,7 @@ export const products: Product[] = [
   }
 ];
 
-export const getFeaturedProduct = (): Product => {
+export const getFeaturedProduct = () => {
   const featured = products.find(product => product.featured);
   return featured || products[0];
 };
