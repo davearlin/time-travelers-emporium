@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 COPY backend/package*.json ./backend/
-COPY shared/package*.json ./shared/ 2>/dev/null || echo "No shared package.json"
+COPY shared/package*.json ./shared/
 
 # Install dependencies
 RUN npm ci --only=production
@@ -24,4 +24,4 @@ ENV NODE_ENV=production
 ENV PORT=3001
 
 # Start the backend server
-CMD ["node", "backend/src/server.js"]
+CMD ["node", "backend/src/app.js"]
