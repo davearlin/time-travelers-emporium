@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon src/app.js",
     "dev:mcp": "node src/mcp/server.js",
+  "test:mcp": "node scripts/mcp-test.js",
     "start": "node src/app.js",
     "build": "echo 'No build step needed for Node.js'",
     "lint": "eslint src/"
