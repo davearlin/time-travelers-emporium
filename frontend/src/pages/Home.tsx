@@ -47,8 +47,12 @@ const Home: React.FC = () => {
             <img 
               src={featuredProduct.image} 
               alt={featuredProduct.name}
+              referrerPolicy="no-referrer"
               onError={(e) => {
-                e.currentTarget.src = 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop';
+                const img = e.currentTarget as HTMLImageElement & { dataset: { fallbackApplied?: string } };
+                if (img.dataset.fallbackApplied === 'true') return;
+                img.dataset.fallbackApplied = 'true';
+                img.src = '/favicon.svg';
               }}
             />
             <div className={styles.featuredBadge}>

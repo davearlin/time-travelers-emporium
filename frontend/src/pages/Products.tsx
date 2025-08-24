@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { ShoppingCart, Filter, SortAsc } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import { useTrackedToast } from '../hooks/useTrackedToast';
@@ -15,6 +15,7 @@ const Products: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const toastRef = useRef(toast);
 
   // Load products from API on component mount
   useEffect(() => {
@@ -22,22 +23,25 @@ const Products: React.FC = () => {
       try {
         setLoading(true);
         setError(null);
-        const fetchedProducts = await apiService.getProducts();
-        setProducts(fetchedProducts);
+  const fetchedProducts = await apiService.getProducts();
+  setProducts(Array.isArray(fetchedProducts) ? fetchedProducts : []);
       } catch (err) {
         setError('Failed to load products');
         console.error('Error loading products:', err);
-        toast.error('Failed to load products. Please try again.');
+        // Use a stable ref to avoid changing dependency and re-running effect
+        toastRef.current.error('Failed to load products. Please try again.');
       } finally {
         setLoading(false);
       }
     };
 
     loadProducts();
-  }, [toast]);
+    // Empty dependency array prevents re-run on each render
+  }, []);
 
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = products ?? [];
+    // Always work with an array to avoid runtime errors
+    let filtered: Product[] = Array.isArray(products) ? products : [];
 
     // Filter by era
     if (filterBy !== 'all') {
@@ -54,7 +58,7 @@ const Products: React.FC = () => {
     }
 
     // Sort products
-    const sorted = [...filtered].sort((a, b) => {
+  const sorted = [...filtered].sort((a, b) => {
       switch (sortBy) {
         case 'name':
           return a.name.localeCompare(b.name);
@@ -162,8 +166,13 @@ const Products: React.FC = () => {
                     src={product.image} 
                     alt={product.name}
                     className={styles.productImage}
+                    referrerPolicy="no-referrer"
                     onError={(e) => {
-                      e.currentTarget.src = 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop';
+                      const img = e.currentTarget as HTMLImageElement & { dataset: { fallbackApplied?: string } };
+                      if (img.dataset.fallbackApplied === 'true') return; // prevent infinite loop
+                      img.dataset.fallbackApplied = 'true';
+                      // Use a local placeholder to avoid external 404 loops
+                      img.src = '/favicon.svg';
                     }}
                   />
                   <div className={styles.productEra}>
