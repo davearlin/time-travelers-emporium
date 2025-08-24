@@ -1,4 +1,4 @@
-name: Deploy Backend to Azure Web App
+name: Backend - Deploy to Azure Web App
 
 on:
   push:
