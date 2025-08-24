@@ -33,23 +33,48 @@ jobs:
     - name: Install shared dependencies
       run: npm ci --workspace=shared
 
-    - name: Build backend
-      run: npm run build --workspace=backend
-
     - name: Create deployment package
       run: |
         mkdir deploy-package
-        cp -r backend/dist/* deploy-package/
+        cp -r backend/src deploy-package/
         cp backend/package.json deploy-package/
         cp -r shared deploy-package/
-        # Create a simple package.json for production dependencies only
-        cd deploy-package
-        npm init -y
-        npm pkg set main="server.js"
-        npm pkg set scripts.start="node server.js"
-        npm pkg set engines.node=">=18.0.0"
-        # Install only production dependencies
-        npm install express cors helmet compression dotenv
+        # Create web.config for Azure Web App Node.js deployment
+        cat > deploy-package/web.config << 'EOF'
+        <?xml version="1.0" encoding="utf-8"?>
+        <configuration>
+          <system.webServer>
+            <handlers>
+              <add name="iisnode" path="src/app.js" verb="*" modules="iisnode"/>
+            </handlers>
+            <rewrite>
+              <rules>
+                <rule name="NodeInspector" patternSyntax="ECMAScript" stopProcessing="true">
+                  <match url="^src/app.js\/debug[\/]?" />
+                </rule>
+                <rule name="StaticContent">
+                  <action type="Rewrite" url="public{REQUEST_URI}"/>
+                </rule>
+                <rule name="DynamicContent">
+                  <conditions>
+                    <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="True"/>
+                  </conditions>
+                  <action type="Rewrite" url="src/app.js"/>
+                </rule>
+              </rules>
+            </rewrite>
+            <security>
+              <requestFiltering>
+                <hiddenSegments>
+                  <remove segment="bin"/>
+                </hiddenSegments>
+              </requestFiltering>
+            </security>
+            <httpErrors existingResponse="PassThrough" />
+            <iisnode watchedFiles="web.config;*.js"/>
+          </system.webServer>
+        </configuration>
+        EOF
 
     - name: Login to Azure
       uses: azure/login@v1
