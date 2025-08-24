@@ -18,7 +18,11 @@ import './App.css';
 
 // Protected Route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user } = useAuth();
+  const { user, initializing } = useAuth();
+  if (initializing) {
+    // Minimal placeholder to avoid redirect flicker during auth rehydration
+    return null;
+  }
   return user?.isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
