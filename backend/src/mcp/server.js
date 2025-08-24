@@ -250,6 +250,37 @@ class TimeTravelersEmporiumMCPServer {
                 }
               }
             }
+          },
+          {
+            name: 'remove_from_cart',
+            description: 'Remove a product from the shopping cart',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                productId: {
+                  type: 'string',
+                  description: 'The ID of the product to remove'
+                },
+                sessionId: {
+                  type: 'string',
+                  description: 'Customer session ID (optional)'
+                }
+              },
+              required: ['productId']
+            }
+          },
+          {
+            name: 'clear_cart',
+            description: 'Remove all items from the shopping cart',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                sessionId: {
+                  type: 'string',
+                  description: 'Customer session ID (optional)'
+                }
+              }
+            }
           }
         ]
       };
@@ -272,6 +303,10 @@ class TimeTravelersEmporiumMCPServer {
           return this.handleAddToCart(args);
         case 'get_cart_summary':
           return this.handleGetCartSummary(args);
+        case 'remove_from_cart':
+          return this.handleRemoveFromCart(args);
+        case 'clear_cart':
+          return this.handleClearCart(args);
         default:
           throw new Error(`Unknown tool: ${name}`);
       }
@@ -417,6 +452,35 @@ class TimeTravelersEmporiumMCPServer {
               `• Total Items: ${cart.totalItems}\n` +
               `• Total Price: $${cart.totalPrice.toFixed(2)}\n` +
               `• Last Updated: ${cart.updatedAt.toLocaleString()}`
+      }]
+    };
+  }
+
+  async handleRemoveFromCart(args) {
+    const { productId, sessionId = 'mcp-session' } = args;
+    const product = ProductService.getProductById(productId);
+    CartService.removeFromCart(sessionId, productId);
+    const summary = CartService.getCartSummary(sessionId);
+
+    return {
+      content: [{
+        type: 'text',
+        text: `Removed "${product ? product.name : productId}" from cart.\n\n` +
+              `**Cart Summary:**\n` +
+              `• Total Items: ${summary.totalItems}\n` +
+              `• Total Price: $${summary.totalPrice.toFixed(2)}\n` +
+              `• Unique Products: ${summary.itemCount}`
+      }]
+    };
+  }
+
+  async handleClearCart(args) {
+    const { sessionId = 'mcp-session' } = args;
+    CartService.clearCart(sessionId);
+    return {
+      content: [{
+        type: 'text',
+        text: 'Cart cleared.'
       }]
     };
   }
