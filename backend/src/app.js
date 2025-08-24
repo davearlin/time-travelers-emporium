@@ -16,6 +16,13 @@ app.use('/api/products', productsRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/orders', ordersRouter);
 
+// MCP placeholder endpoint for Copilot Studio custom connector validation
+// Note: The actual MCP server runs over stdio. This route is a no-op 200 OK so
+// the OpenAPI-based connector can be created and pointed at a reachable URL.
+app.post('/mcp', (req, res) => {
+  res.status(200).json({ ok: true, note: 'MCP stdio server available only locally; this HTTP endpoint is a placeholder for connector setup.' });
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
