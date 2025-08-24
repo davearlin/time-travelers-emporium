@@ -37,7 +37,7 @@ const Products: React.FC = () => {
   }, [toast]);
 
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = products;
+    let filtered = products ?? [];
 
     // Filter by era
     if (filterBy !== 'all') {
@@ -138,7 +138,7 @@ const Products: React.FC = () => {
         )}
       </div>
 
-      {loading ? (
+  {loading ? (
         <div className={styles.loading}>
           <p>Loading products...</p>
         </div>

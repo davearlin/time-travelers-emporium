@@ -1,7 +1,7 @@
 // API service for connecting to backend
 import type { Product } from '../../../shared';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string | undefined) || 'http://localhost:3001';
 
 export interface ApiCartItem {
   id: string;
@@ -24,9 +24,8 @@ class ApiService {
       return await response.json();
     } catch (error) {
       console.warn('API not available, using local data:', error);
-      // Fallback to local data if API is not available
-      const { products } = await import('../../../shared/products');
-      return products;
+      // Fallback: embed a minimal empty list to avoid dynamic import issues in production
+      return [] as Product[];
     }
   }
 
@@ -36,9 +35,8 @@ class ApiService {
       if (!response.ok) throw new Error('Failed to fetch product');
       return await response.json();
     } catch (error) {
-      console.warn('API not available, using local data:', error);
-      const { products } = await import('../../../shared/products');
-      return products.find((p: Product) => p.id === id) || null;
+      console.warn('API not available, returning null product:', error);
+      return null;
     }
   }
 
@@ -88,7 +86,7 @@ class ApiService {
   // Health check to see if backend is available
   async healthCheck(): Promise<boolean> {
     try {
-      const response = await fetch(`${this.baseUrl}/health`, {
+      const response = await fetch(`${this.baseUrl}/api/health`, {
         method: 'GET',
         signal: AbortSignal.timeout(5000) // 5 second timeout
       });
