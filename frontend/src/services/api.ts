@@ -1,5 +1,7 @@
 // API service for connecting to backend
 import type { Product } from '../../../shared';
+// Local fallback dataset re-exported from shared
+import { products as localProducts } from '../data/products';
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string | undefined) || 'http://localhost:3001';
 
@@ -21,11 +23,16 @@ class ApiService {
     try {
       const response = await fetch(`${this.baseUrl}/api/products`);
       if (!response.ok) throw new Error('Failed to fetch products');
-      return await response.json();
+  const data = await response.json();
+  // Backend may return either an array or an object with { products, ... }
+  if (Array.isArray(data)) return data as Product[];
+  if (data && Array.isArray(data.products)) return data.products as Product[];
+  console.warn('Unexpected products response shape:', data);
+  return [] as Product[];
     } catch (error) {
       console.warn('API not available, using local data:', error);
-      // Fallback: embed a minimal empty list to avoid dynamic import issues in production
-      return [] as Product[];
+  // Fallback to local dataset bundled with the app
+  return Array.isArray(localProducts) ? (localProducts as Product[]) : ([] as Product[]);
     }
   }
 
