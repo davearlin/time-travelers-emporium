@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { ShoppingCart, Filter, SortAsc } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import { useTrackedToast } from '../hooks/useTrackedToast';
-import { products } from '../data/products';
+import { apiService } from '../services/api';
 import type { Product, SortOption, FilterOption } from '../types';
 import styles from './Products.module.css';
 
@@ -12,18 +12,41 @@ const Products: React.FC = () => {
   const [sortBy, setSortBy] = useState<SortOption>('name');
   const [filterBy, setFilterBy] = useState<FilterOption>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Load products from API on component mount
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const fetchedProducts = await apiService.getProducts();
+        setProducts(fetchedProducts);
+      } catch (err) {
+        setError('Failed to load products');
+        console.error('Error loading products:', err);
+        toast.error('Failed to load products. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, [toast]);
 
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = products;
 
     // Filter by era
     if (filterBy !== 'all') {
-      filtered = filtered.filter(product => product.era === filterBy);
+      filtered = filtered.filter((product: Product) => product.era === filterBy);
     }
 
     // Filter by search term
     if (searchTerm) {
-      filtered = filtered.filter(product =>
+      filtered = filtered.filter((product: Product) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.category.toLowerCase().includes(searchTerm.toLowerCase())
@@ -47,7 +70,7 @@ const Products: React.FC = () => {
     });
 
     return sorted;
-  }, [sortBy, filterBy, searchTerm]);
+  }, [products, sortBy, filterBy, searchTerm]);
 
   const handleAddToCart = (product: Product) => {
     addToCart(product);
@@ -106,70 +129,94 @@ const Products: React.FC = () => {
       </div>
 
       <div className={styles.resultsInfo}>
-        <p>Showing {filteredAndSortedProducts.length} of {products.length} products</p>
+        {loading ? (
+          <p>Loading products...</p>
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : (
+          <p>Showing {filteredAndSortedProducts.length} of {products.length} products</p>
+        )}
       </div>
 
-      <div className={styles.productsGrid}>
-        {filteredAndSortedProducts.map((product) => (
-          <div key={product.id} className={styles.productCard}>
-            <div className={styles.productImageContainer}>
-              <img 
-                src={product.image} 
-                alt={product.name}
-                className={styles.productImage}
-                onError={(e) => {
-                  e.currentTarget.src = 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop';
-                }}
-              />
-              <div className={styles.productEra}>
-                {product.era.charAt(0).toUpperCase() + product.era.slice(1)}
-              </div>
-              {product.featured && (
-                <div className={styles.featuredBadge}>Featured</div>
-              )}
-            </div>
-            
-            <div className={styles.productContent}>
-              <h3 className={styles.productName}>{product.name}</h3>
-              <p className={styles.productCategory}>{product.category}</p>
-              <p className={styles.productDescription}>
-                {product.description.length > 100 
-                  ? `${product.description.substring(0, 100)}...` 
-                  : product.description
-                }
-              </p>
-              
-              <div className={styles.productFooter}>
-                <span className={styles.productPrice}>
-                  ${product.price.toLocaleString()}
-                </span>
-                <button
-                  onClick={() => handleAddToCart(product)}
-                  className={styles.addToCartButton}
-                >
-                  <ShoppingCart size={16} />
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {filteredAndSortedProducts.length === 0 && (
-        <div className={styles.noResults}>
-          <p>No products found matching your criteria.</p>
+      {loading ? (
+        <div className={styles.loading}>
+          <p>Loading products...</p>
+        </div>
+      ) : error ? (
+        <div className={styles.error}>
+          <p>Failed to load products. Please try again.</p>
           <button 
-            onClick={() => {
-              setSearchTerm('');
-              setFilterBy('all');
-              setSortBy('name');
-            }}
-            className={styles.clearFiltersButton}
+            onClick={() => window.location.reload()}
+            className={styles.retryButton}
           >
-            Clear Filters
+            Retry
           </button>
         </div>
+      ) : (
+        <>
+          <div className={styles.productsGrid}>
+            {filteredAndSortedProducts.map((product) => (
+              <div key={product.id} className={styles.productCard}>
+                <div className={styles.productImageContainer}>
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className={styles.productImage}
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop';
+                    }}
+                  />
+                  <div className={styles.productEra}>
+                    {product.era.charAt(0).toUpperCase() + product.era.slice(1)}
+                  </div>
+                  {product.featured && (
+                    <div className={styles.featuredBadge}>Featured</div>
+                  )}
+                </div>
+                
+                <div className={styles.productContent}>
+                  <h3 className={styles.productName}>{product.name}</h3>
+                  <p className={styles.productCategory}>{product.category}</p>
+                  <p className={styles.productDescription}>
+                    {product.description.length > 100 
+                      ? `${product.description.substring(0, 100)}...` 
+                      : product.description
+                    }
+                  </p>
+                  
+                  <div className={styles.productFooter}>
+                    <span className={styles.productPrice}>
+                      ${product.price.toLocaleString()}
+                    </span>
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      className={styles.addToCartButton}
+                    >
+                      <ShoppingCart size={16} />
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {!loading && !error && filteredAndSortedProducts.length === 0 && products.length > 0 && (
+            <div className={styles.noResults}>
+              <p>No products found matching your criteria.</p>
+              <button 
+                onClick={() => {
+                  setSearchTerm('');
+                  setFilterBy('all');
+                  setSortBy('name');
+                }}
+                className={styles.clearFiltersButton}
+              >
+                Clear Filters
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
