@@ -1,0 +1,49 @@
+{
+  "name": "time-travelers-emporium-remote",
+  "version": "1.0.0",
+  "description": "Time Travelers' Emporium MCP Server - Remote Azure connection",
+  "transport": {
+    "type": "http",
+    "url": "https://time-travelers-backend-api.azurewebsites.net/mcp",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    }
+  },
+  "capabilities": {
+    "resources": [
+      "emporium://products",
+      "emporium://products/featured", 
+      "emporium://products/categories",
+      "emporium://products/eras",
+      "emporium://analytics/stats"
+    ],
+    "tools": [
+      "search_products",
+      "get_product_details", 
+      "filter_products_by_price",
+      "get_products_by_era",
+      "add_to_cart",
+      "get_cart_summary"
+    ]
+  },
+  "examples": [
+    {
+      "description": "Search for medieval weapons",
+      "query": "Show me all medieval weapons under $2000"
+    },
+    {
+      "description": "Get product details",
+      "query": "Tell me about the Tesla Wireless Energy Prototype"
+    },
+    {
+      "description": "Add to cart",
+      "query": "Add the Viking Battle Axe to my cart"
+    },
+    {
+      "description": "Price analysis",
+      "query": "What's the average price of ancient artifacts?"
+    }
+  ]
+}

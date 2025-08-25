@@ -16,11 +16,26 @@ app.use('/api/products', productsRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/orders', ordersRouter);
 
-// MCP placeholder endpoint for Copilot Studio custom connector validation
-// Note: The actual MCP server runs over stdio. This route is a no-op 200 OK so
-// the OpenAPI-based connector can be created and pointed at a reachable URL.
-app.post('/mcp', (req, res) => {
-  res.status(200).json({ ok: true, note: 'MCP stdio server available only locally; this HTTP endpoint is a placeholder for connector setup.' });
+// MCP Streamable endpoint for Copilot Studio Agent tools
+// This implements the mcp-streamable-1.0 protocol for LLM-powered agents
+app.post('/mcp', async (req, res) => {
+  try {
+    // Import the MCP server class
+    const { TimeTravelersEmporiumMCPServer } = await import('./mcp/streamable-server.js');
+    
+    // Create server instance and handle the request
+    const mcpServer = new TimeTravelersEmporiumMCPServer();
+    const response = await mcpServer.handleStreamableRequest(req.body);
+    
+    res.json(response);
+  } catch (error) {
+    console.error('MCP Streamable error:', error);
+    res.status(500).json({ 
+      error: 'MCP Server Error', 
+      message: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
 });
 
 // Health check
