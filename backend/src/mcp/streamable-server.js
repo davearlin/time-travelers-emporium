@@ -100,22 +100,143 @@ export class TimeTravelersEmporiumMCPServer {
   }
 
   async handleListTools() {
-    // Return a minimal set of tools for testing
     return {
       result: {
         tools: [
           {
-            name: 'test_tool',
-            description: 'A simple test tool',
+            name: 'search_products',
+            description: 'Search for temporal artifacts in the Time Travelers\' Emporium catalog',
             inputSchema: {
               type: 'object',
               properties: {
-                message: {
+                query: {
                   type: 'string',
-                  description: 'Test message'
+                  description: 'Search term for finding products'
+                },
+                category: {
+                  type: 'string',
+                  description: 'Optional category filter (e.g., weapons, armor, tools)'
+                },
+                era: {
+                  type: 'string',
+                  description: 'Optional historical era filter (e.g., Medieval, Renaissance, Industrial)'
+                },
+                sortBy: {
+                  type: 'string',
+                  description: 'Optional sort order (price_asc, price_desc, name)'
                 }
               },
-              required: ['message']
+              required: ['query']
+            }
+          },
+          {
+            name: 'get_product_details',
+            description: 'Get detailed information about a specific temporal artifact',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                productId: {
+                  type: 'string',
+                  description: 'The unique ID of the product'
+                }
+              },
+              required: ['productId']
+            }
+          },
+          {
+            name: 'filter_products_by_price',
+            description: 'Filter products by price range',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                minPrice: {
+                  type: 'number',
+                  description: 'Minimum price in dollars'
+                },
+                maxPrice: {
+                  type: 'number',
+                  description: 'Maximum price in dollars'
+                }
+              },
+              required: ['maxPrice']
+            }
+          },
+          {
+            name: 'get_products_by_era',
+            description: 'Get all products from a specific historical era',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                era: {
+                  type: 'string',
+                  description: 'Historical era (e.g., Medieval, Renaissance, Industrial, Victorian, Future)'
+                }
+              },
+              required: ['era']
+            }
+          },
+          {
+            name: 'add_to_cart',
+            description: 'Add a temporal artifact to the shopping cart',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                productId: {
+                  type: 'string',
+                  description: 'The unique ID of the product to add'
+                },
+                quantity: {
+                  type: 'number',
+                  description: 'Number of items to add (default: 1)'
+                },
+                sessionId: {
+                  type: 'string',
+                  description: 'Shopping session ID (default: default-session)'
+                }
+              },
+              required: ['productId']
+            }
+          },
+          {
+            name: 'get_cart_summary',
+            description: 'Get current shopping cart contents and total',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                sessionId: {
+                  type: 'string',
+                  description: 'Shopping session ID (default: default-session)'
+                }
+              }
+            }
+          },
+          {
+            name: 'get_featured_products',
+            description: 'Get currently featured temporal artifacts',
+            inputSchema: {
+              type: 'object',
+              properties: {}
+            }
+          },
+          {
+            name: 'get_categories',
+            description: 'Get all available product categories',
+            inputSchema: {
+              type: 'object',
+              properties: {}
+            }
+          },
+          {
+            name: 'clear_cart',
+            description: 'Clear all items from the shopping cart',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                sessionId: {
+                  type: 'string',
+                  description: 'Shopping session ID (default: default-session)'
+                }
+              }
             }
           }
         ]
@@ -255,6 +376,8 @@ export class TimeTravelersEmporiumMCPServer {
           return await this.handleAddToCart(args);
         case 'get_cart_summary':
           return await this.handleGetCartSummary(args);
+        case 'clear_cart':
+          return await this.handleClearCart(args);
         case 'get_featured_products':
           return await this.handleGetFeaturedProducts(args);
         case 'get_categories':
@@ -469,5 +592,31 @@ export class TimeTravelersEmporiumMCPServer {
         }]
       }
     };
+  }
+
+  async handleClearCart(args) {
+    const { sessionId = 'default-session' } = args || {};
+    
+    try {
+      const cart = CartService.clearCart(sessionId);
+      
+      return {
+        result: {
+          content: [{
+            type: 'text',
+            text: `🗑️ **Cart Cleared!**\n\nYour temporal shopping cart has been emptied. All items have been returned to their respective timelines.\n\n✨ Ready for a fresh start on your next temporal shopping adventure!`
+          }]
+        }
+      };
+    } catch (error) {
+      return {
+        result: {
+          content: [{
+            type: 'text',
+            text: `❌ Error clearing cart: ${error.message}`
+          }]
+        }
+      };
+    }
   }
 }
