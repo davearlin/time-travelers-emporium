@@ -1,11 +1,8 @@
 swagger: '2.0'
 info:
-  title: Time Travelers' Emporium MCP
-  description: MCP Streamable endpoint for Copilot Studio custom connector - Access to temporal artifacts catalog, pricing, and cart operations
+  title: Time Travelers Emporium MCP
+  description: MCP Streamable endpoint for Copilot Studio custom connector
   version: 1.0.0
-  contact:
-    name: Time Travelers' Emporium API Support
-    url: https://time-travelers-backend-api.azurewebsites.net
 host: time-travelers-backend-api.azurewebsites.net
 basePath: /
 schemes:
@@ -17,99 +14,64 @@ produces:
 paths:
   /mcp:
     post:
-      summary: Time Travelers' Emporium MCP Server
-      description: Streamable MCP endpoint for Agentic protocol in Copilot Studio.
+      summary: Invoke MCP Server
+      description: Streamable MCP endpoint for Agentic protocol in Copilot Studio
       operationId: InvokeMCP
       x-ms-agentic-protocol: mcp-streamable-1.0
       parameters:
-        - in: body
-          name: body
-          description: MCP client message payload
+        - name: mcpRequest
+          in: body
+          description: MCP request payload
           required: true
           schema:
-            type: object
-            properties:
-              method:
-                type: string
-                description: MCP method name (e.g., tools/list, tools/call, resources/list)
-                example: "tools/list"
-              params:
-                type: object
-                description: Method-specific parameters
-                example: {}
-            required:
-              - method
+            $ref: '#/definitions/MCPRequest'
       responses:
         '200':
-          description: Success
+          description: Successful MCP response
           schema:
-            type: object
-            description: MCP response payload
+            $ref: '#/definitions/MCPResponse'
         '400':
-          description: Bad Request - Invalid MCP request format
+          description: Bad Request
           schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                  message:
-                    type: string
+            $ref: '#/definitions/ErrorResponse'
         '500':
-          description: Internal Server Error - MCP server error
+          description: Server Error
           schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                  message:
-                    type: string
-        default:
-          description: Unexpected error
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
+            $ref: '#/definitions/ErrorResponse'
 definitions:
   MCPRequest:
     type: object
+    required:
+      - method
     properties:
       method:
         type: string
         description: MCP method name
-        enum: ["initialize", "tools/list", "tools/call", "resources/list", "resources/read"]
+        example: "tools/list"
       params:
         type: object
-        description: Method-specific parameters
-    required:
-      - method
+        description: Method parameters
+        example: {}
   MCPResponse:
     type: object
     properties:
       result:
         type: object
-        description: Method result when successful
+        description: Success result
       error:
-        type: object
-        description: Error information when request fails
-        properties:
-          code:
-            type: integer
-          message:
-            type: string
+        $ref: '#/definitions/MCPError'
   MCPError:
     type: object
     properties:
+      code:
+        type: integer
+        description: Error code
+      message:
+        type: string
+        description: Error message
+  ErrorResponse:
+    type: object
+    properties:
       error:
-        type: object
-        properties:
-          code:
-            type: integer
-          message:
-            type: string
+        type: string
+        description: Error description
