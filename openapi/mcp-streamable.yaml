@@ -1,8 +1,11 @@
 swagger: '2.0'
 info:
   title: Time Travelers' Emporium MCP
-  description: MCP Streamable endpoint for Copilot Studio custom connector
+  description: MCP Streamable endpoint for Copilot Studio custom connector - Access to temporal artifacts catalog, pricing, and cart operations
   version: 1.0.0
+  contact:
+    name: Time Travelers' Emporium API Support
+    url: https://time-travelers-backend-api.azurewebsites.net
 host: time-travelers-backend-api.azurewebsites.net
 basePath: /
 schemes:
@@ -21,14 +24,92 @@ paths:
       parameters:
         - in: body
           name: body
-          description: MCP client message payload (opaque to OpenAPI)
-          required: false
+          description: MCP client message payload
+          required: true
           schema:
             type: object
+            properties:
+              method:
+                type: string
+                description: MCP method name (e.g., tools/list, tools/call, resources/list)
+                example: "tools/list"
+              params:
+                type: object
+                description: Method-specific parameters
+                example: {}
+            required:
+              - method
       responses:
         '200':
           description: Success
-        '4XX':
-          description: Client error
-        '5XX':
-          description: Server error
+          schema:
+            type: object
+            description: MCP response payload
+        '400':
+          description: Bad Request - Invalid MCP request format
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+        '500':
+          description: Internal Server Error - MCP server error
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+        default:
+          description: Unexpected error
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+definitions:
+  MCPRequest:
+    type: object
+    properties:
+      method:
+        type: string
+        description: MCP method name
+        enum: ["initialize", "tools/list", "tools/call", "resources/list", "resources/read"]
+      params:
+        type: object
+        description: Method-specific parameters
+    required:
+      - method
+  MCPResponse:
+    type: object
+    properties:
+      result:
+        type: object
+        description: Method result when successful
+      error:
+        type: object
+        description: Error information when request fails
+        properties:
+          code:
+            type: integer
+          message:
+            type: string
+  MCPError:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          code:
+            type: integer
+          message:
+            type: string
