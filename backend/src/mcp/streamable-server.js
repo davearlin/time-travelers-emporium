@@ -17,35 +17,56 @@ export class TimeTravelersEmporiumMCPServer {
    * Implements the mcp-streamable-1.0 protocol
    */
   async handleStreamableRequest(requestBody) {
-    const { method, params } = requestBody;
+    const { method, params, id, jsonrpc } = requestBody;
 
     try {
+      let result;
       switch (method) {
         case 'initialize':
-          return this.handleInitialize(params);
+          result = await this.handleInitialize(params);
+          break;
         
         case 'tools/list':
-          return this.handleListTools();
+          result = await this.handleListTools();
+          break;
         
         case 'tools/call':
-          return this.handleToolCall(params);
+          result = await this.handleToolCall(params);
+          break;
         
         case 'resources/list':
-          return this.handleListResources();
+          result = await this.handleListResources();
+          break;
         
         case 'resources/read':
-          return this.handleReadResource(params);
+          result = await this.handleReadResource(params);
+          break;
         
         default:
           return {
+            jsonrpc: jsonrpc || '2.0',
+            id: id || null,
             error: {
               code: -32601,
               message: `Method not found: ${method}`
             }
           };
       }
+
+      // Return JSON-RPC format if id is present (Copilot Studio), otherwise simple format
+      if (id !== undefined) {
+        return {
+          jsonrpc: jsonrpc || '2.0',
+          id: id,
+          ...result
+        };
+      }
+      return result;
+
     } catch (error) {
       return {
+        jsonrpc: jsonrpc || '2.0',
+        id: id || null,
         error: {
           code: -32603,
           message: `Internal error: ${error.message}`
@@ -59,8 +80,13 @@ export class TimeTravelersEmporiumMCPServer {
       result: {
         protocolVersion: 'mcp-streamable-1.0',
         capabilities: {
-          tools: {},
-          resources: {}
+          tools: {
+            listChanged: false
+          },
+          resources: {
+            subscribe: false,
+            listChanged: false
+          }
         },
         serverInfo: this.serverInfo
       }
