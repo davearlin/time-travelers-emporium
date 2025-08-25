@@ -1,28 +1,18 @@
 swagger: '2.0'
 info:
-  title: Time Travelers Emporium MCP
-  description: MCP Streamable endpoint for Copilot Studio
+  title: Time Travelers Emporium
+  description: MCP Test Specification, YAML for streamable MCP support in Copilot Studio
   version: 1.0.0
 host: time-travelers-backend-api.azurewebsites.net
 basePath: /
 schemes:
   - https
-consumes:
-  - application/json
-produces:
-  - application/json
 paths:
   /mcp:
     post:
-      summary: Invoke MCP Server
-      description: MCP Streamable endpoint for Agentic protocol
-      operationId: InvokeMCP
+      summary: Time Travelers Emporium MCP Server
       x-ms-agentic-protocol: mcp-streamable-1.0
-      x-ms-visibility: internal
-      parameters: []
+      operationId: InvokeMCP
       responses:
         '200':
-          description: Successful response
-          schema:
-            type: object
-            additionalProperties: true
+          description: Success
