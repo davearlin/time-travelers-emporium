@@ -105,17 +105,17 @@ export class TimeTravelersEmporiumMCPServer {
         tools: [
           {
             name: 'search_products',
-            description: 'Search for temporal artifacts in the Time Travelers\' Emporium catalog',
+            description: 'Search for temporal artifacts in the Time Travelers\' Emporium catalog. Can search by keywords, browse by category, or both.',
             inputSchema: {
               type: 'object',
               properties: {
                 query: {
                   type: 'string',
-                  description: 'Search term for finding products'
+                  description: 'Optional search term for finding products. Leave empty to browse by category or era only.'
                 },
                 category: {
                   type: 'string',
-                  description: 'Optional category filter (e.g., weapons, armor, tools)'
+                  description: 'Optional category filter (e.g., weapons, armor, tools, tablets)'
                 },
                 era: {
                   type: 'string',
@@ -126,7 +126,7 @@ export class TimeTravelersEmporiumMCPServer {
                   description: 'Optional sort order (price_asc, price_desc, name)'
                 }
               },
-              required: ['query']
+              required: []
             }
           },
           {
@@ -402,7 +402,9 @@ export class TimeTravelersEmporiumMCPServer {
 
   async handleSearchProducts(args) {
     const { query, category, era, sortBy } = args;
-    let products = ProductService.searchProducts(query);
+    
+    // Start with all products if no query, or search results if query provided
+    let products = query ? ProductService.searchProducts(query) : ProductService.getAllProducts();
 
     if (category) {
       products = products.filter(p => p.category.toLowerCase() === category.toLowerCase());
@@ -416,11 +418,17 @@ export class TimeTravelersEmporiumMCPServer {
       products = ProductService.sortProducts(products, sortBy);
     }
 
+    const searchDescription = query ? `matching "${query}"` : 
+                            category && era ? `in category "${category}" from ${era} era` :
+                            category ? `in category "${category}"` :
+                            era ? `from ${era} era` :
+                            'in the catalog';
+
     return {
       result: {
         content: [{
           type: 'text',
-          text: `Found ${products.length} temporal artifacts matching "${query}":\n\n${products.map(p => 
+          text: `Found ${products.length} temporal artifacts ${searchDescription}:\n\n${products.map(p => 
             `🕰️ **${p.name}** (${p.era})\n💰 $${p.price.toLocaleString()}\n📝 ${p.description}\n🏷️ Category: ${p.category}\n🆔 ID: ${p.id}`
           ).join('\n\n─────────────────────\n\n')}`
         }]

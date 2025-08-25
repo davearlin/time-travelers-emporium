@@ -20,6 +20,9 @@ export class ProductService {
   }
 
   static searchProducts(query) {
+    if (!query || query.trim() === '') {
+      return products; // Return all products if no query
+    }
     const searchTerm = query.toLowerCase();
     return products.filter(product => 
       product.name.toLowerCase().includes(searchTerm) ||
