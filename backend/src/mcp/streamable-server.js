@@ -42,6 +42,12 @@ export class TimeTravelersEmporiumMCPServer {
           result = await this.handleReadResource(params);
           break;
         
+        case 'notifications/initialized':
+          // For Copilot Studio, this notification might expect tools to be returned
+          console.log('Handling notifications/initialized - returning tools list');
+          result = await this.handleListTools();
+          break;
+        
         default:
           return {
             jsonrpc: jsonrpc || '2.0',
