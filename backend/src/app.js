@@ -20,12 +20,24 @@ app.use('/api/orders', ordersRouter);
 // This implements the mcp-streamable-1.0 protocol for LLM-powered agents
 app.post('/mcp', async (req, res) => {
   try {
+    // Log all incoming requests for debugging
+    console.log('=== MCP REQUEST ===');
+    console.log('Headers:', JSON.stringify(req.headers, null, 2));
+    console.log('Body:', JSON.stringify(req.body, null, 2));
+    console.log('Method:', req.method);
+    console.log('URL:', req.url);
+    console.log('================');
+    
     // Import the MCP server class
     const { TimeTravelersEmporiumMCPServer } = await import('./mcp/streamable-server.js');
     
     // Create server instance and handle the request
     const mcpServer = new TimeTravelersEmporiumMCPServer();
     const response = await mcpServer.handleStreamableRequest(req.body);
+    
+    console.log('=== MCP RESPONSE ===');
+    console.log('Response:', JSON.stringify(response, null, 2));
+    console.log('==================');
     
     res.json(response);
   } catch (error) {
@@ -41,6 +53,31 @@ app.post('/mcp', async (req, res) => {
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
+// Simple test endpoint for Copilot Studio connectivity
+app.get('/mcp/test', (req, res) => {
+  console.log('=== MCP TEST REQUEST ===');
+  console.log('Headers:', JSON.stringify(req.headers, null, 2));
+  console.log('=====================');
+  res.json({ 
+    status: 'MCP Test OK', 
+    timestamp: new Date().toISOString(),
+    message: 'Copilot Studio can reach this endpoint'
+  });
+});
+
+app.post('/mcp/test', (req, res) => {
+  console.log('=== MCP TEST POST REQUEST ===');
+  console.log('Headers:', JSON.stringify(req.headers, null, 2));
+  console.log('Body:', JSON.stringify(req.body, null, 2));
+  console.log('==========================');
+  res.json({ 
+    status: 'MCP Test POST OK', 
+    timestamp: new Date().toISOString(),
+    body: req.body,
+    message: 'Copilot Studio can POST to this endpoint'
+  });
 });
 
 // Error handling

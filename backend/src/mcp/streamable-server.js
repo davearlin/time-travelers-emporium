@@ -68,136 +68,22 @@ export class TimeTravelersEmporiumMCPServer {
   }
 
   async handleListTools() {
+    // Return a minimal set of tools for testing
     return {
       result: {
         tools: [
           {
-            name: 'search_products',
-            description: 'Search for temporal artifacts by name, description, category, or era',
+            name: 'test_tool',
+            description: 'A simple test tool',
             inputSchema: {
               type: 'object',
               properties: {
-                query: {
+                message: {
                   type: 'string',
-                  description: 'Search query string'
-                },
-                category: {
-                  type: 'string',
-                  description: 'Filter by category (weapons, artifacts, technology, documents, art)'
-                },
-                era: {
-                  type: 'string',
-                  description: 'Filter by historical era (ancient, medieval, renaissance, modern, future)'
-                },
-                sortBy: {
-                  type: 'string',
-                  enum: ['name', 'price-low', 'price-high', 'era'],
-                  description: 'Sort results by specified criteria'
+                  description: 'Test message'
                 }
               },
-              required: ['query']
-            }
-          },
-          {
-            name: 'get_product_details',
-            description: 'Get detailed information about a specific temporal artifact',
-            inputSchema: {
-              type: 'object',
-              properties: {
-                productId: {
-                  type: 'string',
-                  description: 'The ID of the product to retrieve'
-                }
-              },
-              required: ['productId']
-            }
-          },
-          {
-            name: 'filter_products_by_price',
-            description: 'Find temporal artifacts within a specific price range',
-            inputSchema: {
-              type: 'object',
-              properties: {
-                minPrice: {
-                  type: 'number',
-                  description: 'Minimum price (optional)'
-                },
-                maxPrice: {
-                  type: 'number',
-                  description: 'Maximum price (optional)'
-                },
-                era: {
-                  type: 'string',
-                  description: 'Filter by era (optional)'
-                }
-              }
-            }
-          },
-          {
-            name: 'get_products_by_era',
-            description: 'Get all temporal artifacts from a specific historical era',
-            inputSchema: {
-              type: 'object',
-              properties: {
-                era: {
-                  type: 'string',
-                  enum: ['ancient', 'medieval', 'renaissance', 'modern', 'future'],
-                  description: 'The historical era to filter by'
-                }
-              },
-              required: ['era']
-            }
-          },
-          {
-            name: 'add_to_cart',
-            description: 'Add a temporal artifact to the shopping cart',
-            inputSchema: {
-              type: 'object',
-              properties: {
-                productId: {
-                  type: 'string',
-                  description: 'The ID of the product to add'
-                },
-                quantity: {
-                  type: 'number',
-                  description: 'Quantity to add (default: 1)',
-                  minimum: 1
-                },
-                sessionId: {
-                  type: 'string',
-                  description: 'Customer session ID (optional, will use default if not provided)'
-                }
-              },
-              required: ['productId']
-            }
-          },
-          {
-            name: 'get_cart_summary',
-            description: 'Get current cart contents and summary',
-            inputSchema: {
-              type: 'object',
-              properties: {
-                sessionId: {
-                  type: 'string',
-                  description: 'Customer session ID (optional)'
-                }
-              }
-            }
-          },
-          {
-            name: 'get_featured_products',
-            description: 'Get currently featured temporal artifacts',
-            inputSchema: {
-              type: 'object',
-              properties: {}
-            }
-          },
-          {
-            name: 'get_categories',
-            description: 'Get all available product categories',
-            inputSchema: {
-              type: 'object',
-              properties: {}
+              required: ['message']
             }
           }
         ]

@@ -1,0 +1,84 @@
+swagger: '2.0'
+info:
+  title: Time Travelers Emporium Tools
+  description: Individual MCP tools as separate actions
+  version: 1.0.0
+host: time-travelers-backend-api.azurewebsites.net
+basePath: /
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /mcp:
+    post:
+      summary: Search Products
+      description: Search for temporal artifacts by name, description, category, or era
+      operationId: SearchProducts
+      parameters:
+        - name: request
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              method:
+                type: string
+                default: "tools/call"
+              params:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    default: "search_products"
+                  arguments:
+                    type: object
+                    properties:
+                      query:
+                        type: string
+                        description: Search query
+                      category:
+                        type: string
+                        description: Product category
+                      era:
+                        type: string
+                        description: Historical era
+      responses:
+        '200':
+          description: Search results
+          schema:
+            type: object
+  /mcp/product-details:
+    post:
+      summary: Get Product Details
+      description: Get detailed information about a specific product
+      operationId: GetProductDetails
+      parameters:
+        - name: request
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              method:
+                type: string
+                default: "tools/call"
+              params:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    default: "get_product_details"
+                  arguments:
+                    type: object
+                    properties:
+                      productId:
+                        type: string
+                        description: Product ID
+      responses:
+        '200':
+          description: Product details
+          schema:
+            type: object
